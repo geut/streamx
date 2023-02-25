@@ -1,4 +1,4 @@
-const { EventEmitter } = require('events')
+const EventEmitter = require('eventemitter2')
 const STREAM_DESTROYED = new Error('Stream was destroyed')
 const PREMATURE_CLOSE = new Error('Premature close')
 
@@ -362,6 +362,7 @@ class ReadableState {
 
     if ((stream._duplexState & READ_READABLE_STATUS) === READ_EMIT_READABLE_AND_QUEUED) {
       stream._duplexState |= READ_EMITTED_READABLE
+      console.log('read')
       stream.emit('readable')
     }
 
@@ -609,6 +610,16 @@ class Stream extends EventEmitter {
   }
 
   on (name, fn) {
+    this._onEvent(name)
+    return super.on(name, fn)
+  }
+
+  once (name, fn) {
+    this._onEvent(name)
+    return super.once(name, fn)
+  }
+
+  _onEvent (name) {
     if (this._readableState !== null) {
       if (name === 'data') {
         this._duplexState |= (READ_EMIT_DATA | READ_RESUMED)
@@ -626,8 +637,6 @@ class Stream extends EventEmitter {
         this._writableState.updateNextTick()
       }
     }
-
-    return super.on(name, fn)
   }
 }
 

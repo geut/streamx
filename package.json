@@ -4,6 +4,7 @@
   "description": "streamx module with unpipe method.",
   "main": "index.js",
   "dependencies": {
+    "eventemitter2": "^6.4.9",
     "fast-fifo": "^1.1.0",
     "queue-tick": "^1.0.1"
   },
