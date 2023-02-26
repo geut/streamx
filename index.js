@@ -2,7 +2,7 @@ const EventEmitter = require('eventemitter2')
 const STREAM_DESTROYED = new Error('Stream was destroyed')
 const PREMATURE_CLOSE = new Error('Premature close')
 
-const queueTick = require('queue-tick')
+const nextTick = require('proc-nexttick')
 const FIFO = require('fast-fifo')
 
 /* eslint-disable no-multi-spaces */
@@ -205,7 +205,7 @@ class WritableState {
   updateNextTick () {
     if ((this.stream._duplexState & WRITE_NEXT_TICK) !== 0) return
     this.stream._duplexState |= WRITE_NEXT_TICK
-    queueTick(this.afterUpdateNextTick)
+    nextTick(this.afterUpdateNextTick)
   }
 }
 
@@ -362,7 +362,6 @@ class ReadableState {
 
     if ((stream._duplexState & READ_READABLE_STATUS) === READ_EMIT_READABLE_AND_QUEUED) {
       stream._duplexState |= READ_EMITTED_READABLE
-      console.log('read')
       stream.emit('readable')
     }
 
@@ -396,7 +395,7 @@ class ReadableState {
   updateNextTick () {
     if ((this.stream._duplexState & READ_NEXT_TICK) !== 0) return
     this.stream._duplexState |= READ_NEXT_TICK
-    queueTick(this.afterUpdateNextTick)
+    nextTick(this.afterUpdateNextTick)
   }
 }
 
