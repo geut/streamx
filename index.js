@@ -1,4 +1,4 @@
-const { EventEmitter } = require('events')
+const { EventEmitter } = require('tseep')
 const STREAM_DESTROYED = new Error('Stream was destroyed')
 const PREMATURE_CLOSE = new Error('Premature close')
 
@@ -708,6 +708,36 @@ class Stream extends EventEmitter {
 
       if (this._readableState !== null) this._readableState.updateNextTick()
       if (this._writableState !== null) this._writableState.updateNextTick()
+    }
+  }
+
+  on (name, fn) {
+    this._onEvent(name)
+    return super.on(name, fn)
+  }
+
+  once (name, fn) {
+    this._onEvent(name)
+    return super.once(name, fn)
+  }
+
+  _onEvent (name) {
+    if (this._readableState !== null) {
+      if (name === 'data') {
+        this._duplexState |= (READ_EMIT_DATA | READ_RESUMED)
+        this._readableState.updateNextTick()
+      }
+      if (name === 'readable') {
+        this._duplexState |= READ_EMIT_READABLE
+        this._readableState.updateNextTick()
+      }
+    }
+
+    if (this._writableState !== null) {
+      if (name === 'drain') {
+        this._duplexState |= WRITE_EMIT_DRAIN
+        this._writableState.updateNextTick()
+      }
     }
   }
 }
