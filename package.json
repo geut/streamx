@@ -1,12 +1,7 @@
 {
   "name": "@geut/streamx",
-<<<<<<< HEAD
   "version": "2.20.0",
-  "description": "An iteration of the Node.js core streams with a series of improvements",
-=======
-  "version": "2.13.2",
   "description": "streamx module with unpipe method.",
->>>>>>> 33e443b (update package.json)
   "main": "index.js",
   "dependencies": {
     "fast-fifo": "^1.3.2",
