@@ -44,5 +44,8 @@
   "bugs": {
     "url": "https://github.com/mafintosh/streamx/issues"
   },
-  "homepage": "https://github.com/mafintosh/streamx"
+  "homepage": "https://github.com/mafintosh/streamx",
+  "publishConfig": {
+    "access": "public"
+  }
 }
