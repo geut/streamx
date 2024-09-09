@@ -1,4 +1,4 @@
-const { EventEmitter } = require('tseep')
+const { EventEmitter } = require('eventemitter3')
 const STREAM_DESTROYED = new Error('Stream was destroyed')
 const PREMATURE_CLOSE = new Error('Premature close')
 
