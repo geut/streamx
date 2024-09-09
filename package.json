@@ -1,6 +1,6 @@
 {
   "name": "@geut/streamx",
-  "version": "2.20.0",
+  "version": "2.20.1",
   "description": "streamx module with unpipe method.",
   "main": "index.js",
   "dependencies": {
